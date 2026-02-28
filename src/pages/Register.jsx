@@ -184,9 +184,9 @@ const Register = () => {
               className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-400 w-full bg-white text-gray-500"
             >
               <option value="">Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
             </select>
             {errors.gender && <p className="text-red-500 text-sm">{errors.gender.message}</p>}
           </div>

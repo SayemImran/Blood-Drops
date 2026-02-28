@@ -19,10 +19,11 @@ const Requests = () => {
     <div className="max-w-6xl mx-auto gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {requests.map((request) => (
         <RequestCard
+        key={request.id}
           blood_group={request.blood_group}
           location={request.location}
           description={request.description}
-          is_active={request.is_active}
+          is_active={request.is_active}k
         />
       ))}
     </div>

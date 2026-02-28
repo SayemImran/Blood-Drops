@@ -7,21 +7,25 @@ import Dashboard from "../dashboard/Dashboard";
 import DonorProfile from "../profile/Donorprofile";
 import Donors from "../pages/Donors";
 import Requests from "../pages/Requests";
+import ActivateAccount from "../components/activation/Activateaccount";
 
 const AppRoutes = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route element={<MainLayout/>}>
-            <Route path="login" element={<Login/>}/>
-            <Route path="register" element={<Register/>}/>
-            <Route path="dashboard" element={<Dashboard/>}/>
-            <Route path="profile" element={<DonorProfile/>}/>
-            <Route path="donors" element={<Donors/>}/>
-            <Route path="requests" element={<Requests/>}/>
-            </Route>
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+
+      <Route path="/activate/:uid/:token" element={<ActivateAccount />} />
+
+      <Route element={<MainLayout />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="profile" element={<DonorProfile />} />
+        <Route path="donors" element={<Donors />} />
+        <Route path="requests" element={<Requests />} />
+      </Route>
+    </Routes>
+  );
 };
 
 export default AppRoutes;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropletIcon,
   Users,
@@ -27,6 +27,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
+import apiClient from "../components/services/api-Client";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const areaData = [
@@ -133,6 +134,31 @@ const StatCard = ({ icon: Icon, label, value, delta, positive, color }) => (
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard");
+  const [count,setCount] = useState([]);
+  const [cntDonate, setCntdonate] = useState([]);
+
+  useEffect(()=>{
+    const loadRequest = async()=>{
+      try{
+        const response = await apiClient.get('/requests/');
+        console.log(response.data);
+        setCount(response.data);
+      }catch(error){
+        console.log(error);
+      }
+    };
+    const loadHistory = async ()=>{
+      try{
+        const response = await apiClient.get("/histories/");
+        console.log(response.data);
+        setCntdonate(response.data);
+      }catch(error){
+        console.log(error);
+      }
+    };
+    loadHistory();
+    loadRequest();
+  },[]);
 
   const navItems = [
     { label: "Dashboard", icon: Home },
@@ -262,7 +288,7 @@ const Dashboard = () => {
             <StatCard
               icon={ClipboardList}
               label="Total Requests"
-              value="2,597"
+              value={count.length}
               delta="12%"
               positive={false}
               color="bg-red-400"
