@@ -1,73 +1,53 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import ErrorAlert from "../ErrorAlert";
+import { set } from "react-hook-form";
 import apiClient from "../services/api-Client";
 
-const ActivateAccount = () => {
+const Activateaccount = () => {
+  const [message, setMessage] = useState("");
   const { uid, token } = useParams();
-  const [status, setStatus] = useState("loading"); // "loading" | "success" | "error"
-
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
-    const activate = async () => {
-      try {
-        await apiClient.post("/auth/users/activation/", { uid, token });
-        setStatus("success");
-      } catch (err) {
-        setStatus("error");
-      }
-    };
-    activate();
-  }, [uid, token]);
-
+    apiClient
+      .post("/auth/users/activation/", { uid, token })
+      .then((response) => {
+        setMessage("Your account has been activated successfully! Reodirecting to login...");
+        setTimeout(()=>navigate("/login"), 3000);
+      })
+      .catch((error) =>
+        setError(
+          "something went wrong. Please check the link or try again later.",
+        ),
+      );
+  }, []);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-10 max-w-md w-full text-center">
-        {status === "loading" && (
-          <>
-            <div className="text-5xl mb-4 animate-pulse">🩸</div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Activating your account...
-            </h2>
-            <p className="text-gray-400 text-sm">Please wait a moment.</p>
-          </>
+    <div className="flex items-center justify-center min-h-screen bg-base-200">
+      <div className="card bg-base-200 shadow-xl p-6">
+        <h2 className="text-2xl font-bold mb-4">Activate Account</h2>
+        {message && (
+          <div role="alert" className="alert alert-success">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>{message}</span>
+          </div>
         )}
-
-        {status === "success" && (
-          <>
-            <div className="text-5xl mb-4">✅</div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Account Activated!
-            </h2>
-            <p className="text-gray-500 text-sm mb-6">
-              Your account has been successfully activated. You can now sign in.
-            </p>
-            <Link to="/login">
-              <button className="btn btn-error text-white font-semibold px-8">
-                Go to Login
-              </button>
-            </Link>
-          </>
-        )}
-
-        {status === "error" && (
-          <>
-            <div className="text-5xl mb-4">❌</div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Activation Failed
-            </h2>
-            <p className="text-gray-500 text-sm mb-6">
-              The activation link is invalid or has already been used. Try
-              registering again or contact support.
-            </p>
-            <Link to="/register">
-              <button className="btn btn-error text-white font-semibold px-8">
-                Back to Register
-              </button>
-            </Link>
-          </>
-        )}
+        {error && <ErrorAlert error={error} />}
       </div>
     </div>
   );
 };
 
-export default ActivateAccount;
+export default Activateaccount;
