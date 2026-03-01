@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuthContext from "../hook/useAuthContext";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { loginUser } = useAuthContext();
   const [alert, setAlert] = useState(null); // { type: "success" | "error", message: string }
 
@@ -16,6 +18,9 @@ const Login = () => {
     try {
       await loginUser(data);
       setAlert({ type: "success", message: "Login successful! Redirecting..." });
+      setTimeout(()=>{
+        navigate('/dashboard');
+      },3000);
     } catch (err) {
       const message =
         err?.response?.data?.detail ||

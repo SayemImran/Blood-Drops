@@ -6,12 +6,6 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { Link, useLocation } from "react-router";
 import useAuthContext from "../hook/useAuthContext";
 
-const navLinks = [
-  { to: "/dashboard", label: "Dashboard", icon: <MdDashboard className="text-lg" /> },
-  { to: "/requests",  label: "Requests",  icon: <CiSquareQuestion className="text-xl" /> },
-  { to: "/donors",    label: "Donors",    icon: <CgProfile className="text-lg" /> },
-];
-
 const Navbar = () => {
   const { user, logoutUser } = useAuthContext();
   const location = useLocation();
@@ -20,7 +14,13 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
+  // nav links — dashboard only shown when logged in
+  const navLinks = [
+    ...(user ? [{ to: "/dashboard", label: "Dashboard", icon: <MdDashboard className="text-lg" /> }] : []),
+    { to: "/requests", label: "Requests", icon: <CiSquareQuestion className="text-xl" /> },
+    { to: "/donors",   label: "Donors",   icon: <CgProfile className="text-lg" /> },
+  ];
+
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -31,7 +31,6 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
     setDropdownOpen(false);
