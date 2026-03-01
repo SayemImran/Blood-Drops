@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../components/services/api-Client";
 import DonorCard from "../profile/Donorcard";
-import ProtectedPage from "../components/ProtectedPage";
+import ProtectedPage from "../components/Protectedpage";
 import useAuthContext from "../hook/useAuthContext";
 
 const Donors = () => {
