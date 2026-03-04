@@ -8,6 +8,7 @@ import DonorProfile from "../profile/Donorprofile";
 import Donors from "../pages/Donors";
 import Requests from "../pages/Requests";
 import Activateaccount from "../components/activation/Activateaccount";
+import PaymentSuccess from "../components/Paymentsuccess";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="donors" element={<Donors />} />
         <Route path="requests" element={<Requests />} />
       <Route path="/activate/:uid/:token" element={<Activateaccount />} />
+      <Route path="/payment/success" element={<PaymentSuccess/>} />
       </Route>
     </Routes>
   );

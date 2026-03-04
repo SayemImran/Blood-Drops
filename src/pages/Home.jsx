@@ -5,6 +5,7 @@ import HowItWorks from '../layouts/Howitworks';
 import BloodTypes from '../layouts/Bloodtypes';
 import WhyDonate from '../layouts/Whydonate';
 import CTABanner from '../layouts/Ctabanner';
+import DonateForm from '../components/Donateform';
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
             <BloodTypes/>
             <WhyDonate/>
             <CTABanner/>
+            <DonateForm/>
         </div>
     );
 };
