@@ -12,44 +12,44 @@ export default function DonateForm() {
   const amount = selected ?? (custom ? parseInt(custom) : null);
 
   const initiatePayment = async () => {
-    if (!amount || amount < 10) {
-      setError("Please enter a valid amount (min 10)");
+  if (!amount || amount < 10) {
+    setError("Please enter a valid amount (min 10)");
+    return;
+  }
+  setError("");
+  setLoading(true);
+  try {
+    const authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    const token = authTokens?.access;
+
+    if (!token) {
+      setError("You must be logged in to donate.");
+      setLoading(false);
       return;
     }
-    setError("");
-    setLoading(true);
-    try {
-      const authTokens = JSON.parse(localStorage.getItem("authTokens"));
-      const token = authTokens?.access;
 
-      if (!token) {
-        setError("You must be logged in to donate.");
-        setLoading(false);
-        return;
-      }
-
-      const response = await apiClient.post("payment/initiate/", {
+    // ✅ Axios syntax — headers and data are separate, no JSON.stringify needed
+    const response = await apiClient.post(
+      "payment/initiate/",
+      { amount },                          // ✅ data (was body: JSON.stringify)
+      {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${token}`,
+          Authorization: `JWT ${token}`, // ✅ Bearer not JWT
         },
-        body: JSON.stringify({ amount }),
-      });
-
-      const data = await response.json();
-
-      if (data.payment_url) {
-        window.location.href = data.payment_url;
-      } else {
-        setError("Payment initiation failed. Please try again.");
       }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    );
 
+    if (response.data.payment_url) {        // ✅ axios uses response.data, not response.json()
+      window.location.href = response.data.payment_url;
+    } else {
+      setError("Payment initiation failed. Please try again.");
+    }
+  } catch (err) {
+    setError("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div style={styles.wrapper}>
       <div style={styles.card}>
