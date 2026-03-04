@@ -8,7 +8,7 @@ import DonorProfile from "../profile/Donorprofile";
 import Donors from "../pages/Donors";
 import Requests from "../pages/Requests";
 import Activateaccount from "../components/activation/Activateaccount";
-import PaymentSuccess from "../components/Paymentsuccess";
+import PaymentSuccess from "../components/PaymentSuccess";
 
 const AppRoutes = () => {
   return (
