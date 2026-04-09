@@ -197,32 +197,6 @@ Token Expires   →  Refresh Token used to get new Access Token
 
 ---
 
-## 📁 Project Structure
-
-```
-blood-drops/
-├── backend/
-│   ├── manage.py
-│   ├── requirements.txt
-│   ├── core/               # Django settings
-│   ├── users/              # Donor profiles & auth
-│   ├── requests/           # Blood request system
-│   ├── payments/           # SSLCommerz integration
-│   └── dashboard/          # Stats & analytics
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Route-level pages
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── api/            # Axios API calls
-│   │   └── context/        # Auth context & state
-│   └── package.json
-│
-└── README.md
-```
-
 ---
 
 ## 🤝 Contributing
